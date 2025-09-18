@@ -1,0 +1,6 @@
+. Funciones de disperción (Hash Function)
+. Encadenamiento (Chaining)
+. Dirección Abierta (Open Addressing)
+. Búsqueda interna con direccionamiento abierto (sondeo lineal)
+. Búsqueda interna con direccionamiento abierto (sondeo cuadrático)
+. Búsqueda interna con direccionamiento abierto (doble hash)
