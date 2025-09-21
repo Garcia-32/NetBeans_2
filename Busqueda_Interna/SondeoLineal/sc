@@ -1,0 +1,54 @@
+Ejercicio:
+
+Se tiene una tabla hash de tamaño 7, con una función hash h ( k )=kmodificación7. Se desea insertar las siguientes claves en orden:
+50 ,60 ,20 ,21 ,70 ,33
+a) Inserta todas las claves usando sondeo lineal para resolver colisiones.
+b) Busca la clave 21 y explica cuántas posiciones revisas para encontrarla.
+c) Explique el impacto del sondeo lineal en el rendimiento para este caso.
+
+
+Respuestas:
+
+a) Inserciones con sondeo lineal:
+
+•	Insertar 50:
+50 modificación 7 = 1 → Se coloca en la posición 1.
+•	Insertar 60:
+60 modificación 7 = 4 → Se coloca en la posición 4.
+•	Insertar 20:
+20 modificación 7 = 6 → Se coloca en la posición 6.
+•	Insertar 21:
+21 modificación 7 = 0 → La posición 0 está libre → Se coloca en la posición 0.
+•	Insertar 70:
+70 modificación 7 = 0 → Colisión en la posición 0 (ocupada por 21)
+Sondeo lineal: probar siguiente posición 1 → Ocupada (50)
+Siguiente posición 2 → libre → Se coloca en la posición 2.
+•	Insertar 33:
+33 modificación 7 = 5 → Posición 5 libre → Se coloca en la posición 5.
+
+
+Posición	Valor
+0	--> 21
+1	--> 50
+2	--> 70
+3	--> --
+4	--> 60
+5	--> 33
+6	--> 20
+
+
+b) Búsqueda de la clave 21:
+
+Calculamos
+21 modificación 7 = 0 → Revisamos posición 0 → Encontramos 21 en el primer intento.
+Se revisó solo una posición para encontrar la clave 21.
+
+
+c) Impacto del sondeo lineal en el rendimiento:
+
+En este caso, el sondeo lineal funcionó relativamente bien, ya que las colisiones que ocurrieron se resolvieron inspeccionando posiciones secuenciales cercanas. 
+La inserción de 70 requirió varios intentos (las posiciones 0 y 1 estaban ocupadas), lo que implica más tiempo de búsqueda para insertar y posiblemente para buscar 
+ese elemento en la tabla.
+A medida que la tabla se llena, el sonido lineal puede generar agrupamiento, donde muchas claves se almacenan consecutivamente, lo que degrada la eficiencia de 
+búsquedas e inserciones, elevando el costo en tiempo a casi en el peor caso. Sin embargo, en este ejemplo con baja carga, la eficiencia es bastante buena, con 
+búsquedas e inserciones cercanas a O(1).
