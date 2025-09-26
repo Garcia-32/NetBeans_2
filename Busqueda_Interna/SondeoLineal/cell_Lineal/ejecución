@@ -1,0 +1,18 @@
+Tabla hash luego de inserciones:
+0: Vac�o
+1: Vac�o
+2: Vac�o
+3: (10, Perro)
+4: (3, Gato)
+5: (17, Elefante)
+6: (24, Tigre)
+Buscar clave 17: Elefante
+Tabla hash luego de eliminar clave 17:
+0: Vac�o
+1: Vac�o
+2: Vac�o
+3: (10, Perro)
+4: (3, Gato)
+5: Borrado
+6: (24, Tigre)
+BUILD SUCCESSFUL (total time: 0 seconds)
