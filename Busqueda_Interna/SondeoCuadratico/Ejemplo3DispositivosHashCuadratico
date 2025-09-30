@@ -1,0 +1,245 @@
+import java.util.Objects;
+
+// Clase Producto
+class Producto {
+    private int id;
+    private String nombre;
+
+    public Producto(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{id=" + id + ", nombre='" + nombre + "'}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Producto producto = (Producto) o;
+        return id == producto.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+}
+
+// Entrada de la tabla hash: puede estar vacía, ocupada o eliminada
+enum Estado {
+    VACIO, OCUPADO, ELIMINADO
+}
+
+class Entrada {
+    Producto producto;
+    Estado estado;
+
+    public Entrada() {
+        this.estado = Estado.VACIO;
+    }
+}
+
+// Tabla Hash con Sondeo Cuadrático
+public class TablaHashSondeoCuadratico {
+    private Entrada[] tabla;
+    private int capacidad;
+    private int tamaño;
+
+    public TablaHashSondeoCuadratico(int capacidad) {
+        this.capacidad = capacidad;
+        this.tabla = new Entrada[capacidad];
+        this.tamaño = 0;
+        for (int i = 0; i < capacidad; i++) {
+            tabla[i] = new Entrada();
+        }
+    }
+
+    // Función hash básica
+    private int hash(int clave) {
+        return Math.abs(clave) % capacidad;
+    }
+
+    // Inserción con sondeo cuadrático
+    public boolean insertar(Producto producto) {
+        if (tamaño >= capacidad) {
+            System.out.println("Tabla llena. No se puede insertar más elementos.");
+            return false;
+        }
+
+        int indiceInicial = hash(producto.getId());
+        int intento = 0;
+
+        while (intentos < capacidad) {
+            int indice = (indiceInicial + intento * intento) % capacidad;
+
+            if (tabla[indice].estado == Estado.VACIO || tabla[indice].estado == Estado.ELIMINADO) {
+                tabla[indice].producto = producto;
+                tabla[indice].estado = Estado.OCUPADO;
+                tamaño++;
+                return true;
+            }
+
+            // Si ya existe un producto con el mismo ID
+            if (tabla[indice].producto.getId() == producto.getId()) {
+                System.out.println("Producto con ID " + producto.getId() + " ya existe.");
+                return false;
+            }
+
+            intento++;
+        }
+
+        System.out.println("No se pudo insertar el producto. Tabla llena o bucle.");
+        return false;
+    }
+
+    // Búsqueda por ID
+    public Producto buscar(int id) {
+        int indiceInicial = hash(id);
+        int intento = 0;
+
+        while (intentos < capacidad) {
+            int indice = (indiceInicial + intento * intento) % capacidad;
+
+            if (tabla[indice].estado == Estado.VACIO) {
+                // Si encontramos un vacío, ya no hay más elementos en la secuencia
+                break;
+            }
+
+            if (tabla[indice].estado == Estado.OCUPADO && tabla[indice].producto.getId() == id) {
+                return tabla[indice].producto;
+            }
+
+            intento++;
+        }
+
+        return null; // No encontrado
+    }
+
+    // Eliminación lógica (marca como eliminado)
+    public boolean eliminar(int id) {
+        int indiceInicial = hash(id);
+        int intento = 0;
+
+        while (intentos < capacidad) {
+            int indice = (indiceInicial + intento * intento) % capacidad;
+
+            if (tabla[indice].estado == Estado.VACIO) {
+                break; // No existe el elemento
+            }
+
+            if (tabla[indice].estado == Estado.OCUPADO && tabla[indice].producto.getId() == id) {
+                tabla[indice].estado = Estado.ELIMINADO;
+                tamaño--;
+                return true;
+            }
+
+            intento++;
+        }
+
+        return false; // No encontrado
+    }
+
+    // Método para mostrar el estado de la tabla (útil para depuración)
+    public void mostrarTabla() {
+        for (int i = 0; i < capacidad; i++) {
+            if (tabla[i].estado == Estado.OCUPADO) {
+                System.out.println("Índice " + i + ": " + tabla[i].producto);
+            } else if (tabla[i].estado == Estado.ELIMINADO) {
+                System.out.println("Índice " + i + ": [ELIMINADO]");
+            } else {
+                System.out.println("Índice " + i + ": [VACÍO]");
+            }
+        }
+    }
+
+    // Método main para pruebas
+    public static void main(String[] args) {
+        TablaHashSondeoCuadratico tabla = new TablaHashSondeoCuadratico(10);
+
+        // Inserciones
+        tabla.insertar(new Producto(101, "Laptop"));
+        tabla.insertar(new Producto(102, "Mouse"));
+        tabla.insertar(new Producto(111, "Teclado")); // Colisión con 101 si capacidad=10
+        tabla.insertar(new Producto(121, "Monitor"));
+
+        System.out.println("\n=== Tabla después de inserciones ===");
+        tabla.mostrarTabla();
+
+        // Búsqueda
+        Producto p = tabla.buscar(111);
+        if (p != null) {
+            System.out.println("\nProducto encontrado: " + p);
+        } else {
+            System.out.println("\nProducto no encontrado.");
+        }
+
+        // Eliminación
+        boolean eliminado = tabla.eliminar(102);
+        System.out.println("\n¿Producto 102 eliminado? " + eliminado);
+
+        System.out.println("\n=== Tabla después de eliminación ===");
+        tabla.mostrarTabla();
+
+        // Intentar insertar después de eliminar
+        tabla.insertar(new Producto(131, "Impresora"));
+        System.out.println("\n=== Tabla después de nueva inserción ===");
+        tabla.mostrarTabla();
+    }
+}
+
+
+
+
+-------------------------------------------------------------------------------------------------
+
+=== Tabla después de inserciones ===
+Índice 0: Producto{id=121, nombre='Monitor'}
+Índice 1: Producto{id=101, nombre='Laptop'}
+Índice 2: Producto{id=102, nombre='Mouse'}
+Índice 3: [VACÍO]
+Índice 4: [VACÍO]
+Índice 5: Producto{id=111, nombre='Teclado'}
+Índice 6: [VACÍO]
+Índice 7: [VACÍO]
+Índice 8: [VACÍO]
+Índice 9: [VACÍO]
+
+Producto encontrado: Producto{id=111, nombre='Teclado'}
+
+¿Producto 102 eliminado? true
+
+=== Tabla después de eliminación ===
+Índice 0: Producto{id=121, nombre='Monitor'}
+Índice 1: Producto{id=101, nombre='Laptop'}
+Índice 2: [ELIMINADO]
+Índice 3: [VACÍO]
+Índice 4: [VACÍO]
+Índice 5: Producto{id=111, nombre='Teclado'}
+Índice 6: [VACÍO]
+Índice 7: [VACÍO]
+Índice 8: [VACÍO]
+Índice 9: [VACÍO]
+
+=== Tabla después de nueva inserción ===
+Índice 0: Producto{id=121, nombre='Monitor'}
+Índice 1: Producto{id=101, nombre='Laptop'}
+Índice 2: Producto{id=131, nombre='Impresora'}
+Índice 3: [VACÍO]
+Índice 4: [VACÍO]
+Índice 5: Producto{id=111, nombre='Teclado'}
+Índice 6: [VACÍO]
+Índice 7: [VACÍO]
+Índice 8: [VACÍO]
+Índice 9: [VACÍO]
