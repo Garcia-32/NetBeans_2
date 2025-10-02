@@ -1,0 +1,16 @@
+Búsqueda secuencial: 
+Se revisa elemento por elemento hasta encontrar el dato o llegar al final. 
+Puede aplicarse sobre archivos ordenados o desordenados.
+
+Búsqueda binaria: 
+Requiere que el archivo esté ordenado. 
+Divide en dos la cantidad de elementos, compara con el central y decide en qué mitad continuar la búsqueda recursivamente.
+
+Búsqueda por transformación de claves (hash externo): 
+Se basa en transformar la clave buscada para localizar directamente la posición del elemento
+
+
+En este sentido, la búsqueda externa enfrenta el reto del acceso lento a almacenamiento masivo, por lo que cada método tiene ventajas y desventajas 
+dependiendo del volumen, orden y frecuencia del dato que se consulta, así como los recursos de memoria y procesamiento disponibles. 
+La búsqueda secuencial es simple pero lenta, la binaria es eficiente pero requiere orden y mejor gestión de almacenamiento,
+y el hash ofrece velocidad de acceso directo con la complejidad añadida de colisiones y estructuras adicionales
