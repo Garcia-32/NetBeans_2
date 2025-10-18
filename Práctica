@@ -1,0 +1,8 @@
+Select  contratos.num_contrato, contratos.tipo_contrato, contratos.sueldo_basico, personal.cod_personal, personal.nom_personal, personal.ape_personal, personal.dni_personal
+
+From personal left join contratos
+
+
+On contratos.cod_personal = personal.cod_personal
+
+Where contratos.num_contrato is null
