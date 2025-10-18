@@ -1,0 +1,9 @@
+Select areas.codarea, areas.nomarea, contratos.num_contrato, contratos.tipo_contrato, contratos.sueldo_basico, personal.cod_personal, personal.nom_personal, personal.ape_personal, personal.dni_personal
+
+From areas left join contratos
+
+On areas.codareas = contratos.codareas
+
+Left join personal
+
+On contratos.cod_personal = personal.cod_personal
