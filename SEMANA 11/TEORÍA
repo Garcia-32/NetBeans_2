@@ -1,0 +1,32 @@
+Shell Sort
+
+Es una mejora del método de inserción directa.
+
+En lugar de comparar elementos adyacentes, compara elementos separados por un "gap" o salto que va disminuyendo progresivamente.
+
+Permite "saltos mayores" para mover elementos rápido hacia su posición correcta y luego termina con un ordenamiento por inserción simple.
+
+El algoritmo se basa en ir reduciendo el tamaño del salto y ordenando sublistas, lo que mejora bastante la eficiencia sobre inserción simple.
+
+Es un algoritmo in-place (no requiere espacio extra) y generalmente tiene una eficiencia entre 
+
+O(n^(1.5)) y O(n^2) 
+
+dependiendo de la secuencia de saltos.
+
+
+Quick Sort
+
+Es un algoritmo basado en la técnica de "divide y vencerás".
+
+Elige un "pivote" dentro del arreglo.
+
+Reordena la lista para que todos los elementos menores que el pivote queden a la izquierda, y los mayores a la derecha.
+
+Luego aplica recursivamente la misma operación en las sublistas izquierda y derecha.
+
+En promedio, tiene una complejidad O(nlogn), siendo muy eficiente para grandes volúmenes de datos.
+
+Es también un algoritmo in-place, pero puede tener peor rendimiento en el peor caso 
+
+O(n^2) si el pivote no se elige bien.
